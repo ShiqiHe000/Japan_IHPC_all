@@ -1,0 +1,62 @@
+Re-invent the wheel only for learning
+
+== Play with GDB == 
+Task
+* There is an error in the code, i.e. A*B != A. Try to find it with GDB.
+* Hint: for tests use small matrix_size, e.g. 4
+
+Instructions
+* cd 2.1_gdb
+* make mm
+* There is an error in the code
+  ./mm <matrix_size> 
+* gdb --args ./mm <matrix_size>
+* create break point at "compute" routine
+* print matrix a, b, c and understand why A*B != A
+* (OPTIONAL) modify program during runtime to make it successully complete
+
+== Play with Valgrind ==
+Task
+* Identify memory leak and fix it
+
+Instructions
+* cd 2.2_valgrind
+* make
+* valgrind --tool=memcheck --leak-check=yes ./mm 1024
+
+== Play with gprof ==
+Task
+* Get flat profile and calltreem and try to understand it
+
+Instructions
+* cd 2.3_gprof
+* make
+* ./mm 1024
+* gprof ./mm <gprof_output_file>
+* Do we see all functions? Why?
+* Compile/link with "-fno-inline -fno-reorder-functions"
+* What is the difference?
+
+== Play with perf ==
+Task
+* See available metrics
+  perf list
+Collect metrics
+* perf stat -e <metrics>,<metric> <executable>
+
+Instructions
+* cd 2.4_perf
+* make
+* See available metrics
+  perf list
+* Collect metrics
+  perf stat -e <metrics>,<metric> <executable>
+
+== Measurements and comparison ==
+Task
+* Measure computing time of matrices with growing sizes, i.e. 1024, 2048 and note it. Compare results with GSL?
+
+Instructions
+* cd 2.5_mm
+* make
+* ./mm <matrix_size>

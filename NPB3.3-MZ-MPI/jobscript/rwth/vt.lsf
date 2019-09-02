@@ -1,0 +1,28 @@
+#!/usr/bin/env zsh
+# submit this job from bin.vampir directory with "bsub < vt.lsf"
+
+#BSUB -J mzmpibt_vt
+#BSUB -o mzmpibt_vt.%J
+#BSUB -W 15
+#BSUB -M 512
+
+#BSUB -n 4
+#BSUB -R "span[ptile=2]"
+#BSUB -a intelmpi
+#BSUB -x
+
+# specify a queue OR use the "vihps" workshop reservation
+###BSUB -m mpi-s
+#BSUB -U vihps
+
+export OMP_NUM_THREADS=6
+
+module swap openmpi intelmpi
+module load UNITE vampirtrace/5.11-intel2-intel-marmot-papi
+module list
+
+# VampirTrace configuration
+#export VT_FILE_PREFIX=
+
+$MPIEXEC $FLAGS_MPI_BATCH  bt-mz_B.4
+

@@ -1,0 +1,8 @@
+# generic filter for CCE, GCC, Intel, Pathscale & PGI compilers
+binvcrhs*
+matmul_sub*
+matvec_sub*
+exact_solution*
+binvrhs*
+lhs*init*
+timer_*

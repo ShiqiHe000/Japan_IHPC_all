@@ -1,0 +1,17 @@
++ export OMP_NUM_THREADS=6
++ OMP_NUM_THREADS=6
++ export OMP_PLACES=cores
++ OMP_PLACES=cores
++ export OMP_PROC_BIND=close
++ OMP_PROC_BIND=close
++ export NPB_MZ_BLOAD=0
++ NPB_MZ_BLOAD=0
++ CLASS=C
++ PROCS=8
++ EXE=./bt-mz_C.8
++ mpirun -n 8 ./bt-mz_C.8
+[proxy:0:0@r145.pvt.bridges.psc.edu] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): execvp error on file ./bt-mz_C.8 (No such file or directory)
+[proxy:0:0@r145.pvt.bridges.psc.edu] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): [proxy:0:1@r146.pvt.bridges.psc.edu] HYD_spawn (../../../../../src/pm/i_hydra/libhydra/spawn/intel/hydra_spawn.c:117): execvp error on file ./bt-mz_C.8 (No such file or directory)
+srun: error: r146: task 0: Killed
+srun: Force Terminated job step 6010697.0
+[mpiexec@r145.pvt.bridges.psc.edu] wait_proxies_to_terminate (../../../../../src/pm/i_hydra/mpiexec/intel/i_mpiexec.c:389): downstream from host r146 exited with status 137

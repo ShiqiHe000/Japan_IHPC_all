@@ -1,0 +1,18 @@
+#!/bin/bash --login
+#PBS -N mzmpibt
+#PBS -l mppwidth=16
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A budget
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export MPICH_MAX_THREAD_SAFETY=funneled
+export OMP_NUM_THREADS=4
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+aprun -n $PROCS -d $OMP_NUM_THREADS $EXE
+

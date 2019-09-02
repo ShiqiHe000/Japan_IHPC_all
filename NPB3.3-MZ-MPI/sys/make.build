@@ -1,0 +1,39 @@
+# specify (tool-specific) build configuration/installation
+
+ifeq ("$(firstword $(MPIF77))", "scorep")
+#$(info "Build for Score-P")
+BUILD=.scorep
+endif
+ifeq ("$(firstword $(MPIF77))", "scalasca")
+#$(info "Build for Scalasca")
+BUILD=.scalasca
+endif
+ifeq ("$(firstword $(MPIF77))", "skin")
+#$(info "Build for Scalasca")
+BUILD=.scalasca
+endif
+ifeq ("$(firstword $(MPIF77))", "kinst")
+#$(info "Build for Scalasca/Kojak")
+BUILD=.scalasca
+endif
+ifeq ("$(firstword $(MPIF77))", "vtf77")
+#$(info "Build for Vampir(Trace)")
+BUILD=.vampir
+endif
+ifeq ("$(firstword $(MPIF77))", "marmotf77")
+#$(info "Build for Marmot")
+BUILD=.marmot
+endif
+ifeq ("$(firstword $(MPIF77))", "psc_instrument")
+#$(info "Build for Periscope")
+BUILD=.periscope
+endif
+ifeq ("$(firstword $(MPIF77))", "tau_f90.sh")
+#$(info "Build for Tau")
+BUILD=.tau
+endif
+ifeq ("$(firstword $(MPIF77))", "tau_f77.sh")
+#$(info "Build for Tau")
+BUILD=.tau
+endif
+

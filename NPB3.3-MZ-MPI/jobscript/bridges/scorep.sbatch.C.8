@@ -1,0 +1,38 @@
+#!/bin/bash
+#SBATCH --res=performance     # use reservation
+#SBATCH -J mzmpibt            # job name
+#SBATCH -o profile-C.8-%j.out # stdout output file
+#SBATCH -e profile-C.8-%j.err # stderr output file
+#SBATCH --nodes=2             # requested nodes (28 cores/node)
+#SBATCH --ntasks=8            # requested MPI tasks
+#SBATCH --cpus-per-task=6     # requested logical CPUs/threads per task
+#SBATCH --partition RM        # partition to use
+#SBATCH --export=ALL          # export env varibales
+#SBATCH --time=00:10:00       # max wallclock time (hh:mm:ss)
+#SBATCH --exclusive           # do not share nodes
+
+# setup modules, add tools to PATH
+#source /home/zhukov/ihpcss19/tools/source.me.gcc-openmpi
+source /home/zhukov/ihpcss19/tools/source.me.intel-impi
+set -x
+
+# OpenMP configuration
+export OMP_NUM_THREADS=${SLURM_CPUS_PER_TASK}
+# threads placed on cores
+export OMP_PLACES=cores
+# threads kept close to the master thread in contiguous place partitions
+export OMP_PROC_BIND=close
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+CLASS=C
+PROCS=8
+EXE=./bt-mz_${CLASS}.${PROCS}
+
+# Score-P configuration
+export SCOREP_TIMER=gettimeofday
+export SCOREP_EXPERIMENT_DIRECTORY=scorep_bt-mz_${CLASS}_${SLURM_NTASKS}x${SLURM_CPUS_PER_TASK}_sum
+#export SCOREP_FILTERING_FILE=../config/scorep.filt
+#export SCOREP_METRIC_PAPI=PAPI_TOT_INS,PAPI_TOT_CYC
+
+mpirun -n ${SLURM_NTASKS} ${EXE}

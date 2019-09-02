@@ -1,0 +1,33 @@
+#!/bin/bash --login
+# run from ./bin.scorep directory with "qsub scorep.pbs"
+#PBS -N scorep_mzmpibt
+#PBS -l select=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A y14
+#PBS -q short
+# workshop reserved queue?
+##PBS -q R225396
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+set -x
+
+# Score-P measurement configuration
+#export SCOREP_EXPERIMENT_DIRECTORY=scorep_sum
+#export SCOREP_FILTERING_FILE=../config/scorep.filt
+#export SCOREP_METRIC_PAPI=PAPI_TOT_INS,PAPI_FP_INS
+#export SCOREP_METRIC_PAPI_PER_PROCESS=PAPI_L2_TCM
+#export SCOREP_METRIC_RUSAGE=ru_stime
+#export SCOREP_METRIC_RUSAGE_PER_PROCESS=ru_maxrss
+
+aprun -n $NPROCS -d $OMP_NUM_THREADS $EXE
+
+

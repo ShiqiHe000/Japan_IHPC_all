@@ -1,0 +1,23 @@
+This version of NPB3.3-MZ-MPI is slightly modified to be used as a tutorial
+for POINT/VI-HPS tools, primarily focused on the Fortran BT-MZ benchmark code
+(though the other codes should work as well).
+
+Simply running "make" will report the suggested tutorial specification,
+e.g., "make bt-mz CLASS=W NPROCS=4", which produces a ./bin/bt-mz_W.4 executable
+that is run with "cd bin; mpiexec -np 4 bt-mz_W.4" (or a similar launch command).
+OMP_NUM_THREADS should be set specifying the desired number of OpenMP threads
+for each MPI process (.e.g, "export OMP_NUM_THREADS=4").
+
+The build configuration provided in the file config/make.def can be edited
+to adjust the default specification according to individual/local needs. 
+(Various alternative specifications are provided for particular platforms
+in the config/VI-HPS.samples subdirectory.)
+
+The default MPIF77 compiler specification in config/make.def
+can be adjusted to produce executables prepared with custom instrumentation.
+Examples of instrumenter specifications for POINT/VI-HPS tools can be found
+commented out next to the default specification, and when these are used the
+instrumented executables are produced in dedicated ./bin.$(TOOL) directories.
+
+Refer to the documentation provided with each tool for tool-specific
+instrumentation, measurement and analysis configuration information.

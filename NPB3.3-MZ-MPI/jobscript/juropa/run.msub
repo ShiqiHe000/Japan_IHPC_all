@@ -1,0 +1,19 @@
+#!/bin/bash
+# submit from ./bin directory with "msub run.msub"
+#MSUB -N mzmpibt
+#MSUB -l nodes=1:ppn=16
+#MSUB -v tpt=4
+#MSUB -l walltime=00:10:00
+#MSUB -j oe
+
+# benchmark configuration
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+export OMP_NUM_THREADS=4
+export NPB_MZ_BLOAD=0 # disable load balancing with dynamic threads
+
+set -x
+mpiexec -np $PROCS --exports=NPB_MZ_BLOAD,OMP_NUM_THREADS  $EXE
+

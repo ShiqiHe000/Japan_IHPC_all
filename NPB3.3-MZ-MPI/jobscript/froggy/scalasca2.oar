@@ -1,0 +1,45 @@
+#!/bin/bash
+#OAR -l /nodes=2/core=16,walltime=0:15:00
+#OAR -t devel
+#OAR --project vi-hps-tw18
+#OAR --stdout scalasca_%jobid%
+#OAR --stderr scalasca_%jobid%
+
+
+# Environnement
+. /applis/site/env.bash
+module load intel-devel
+
+
+module use /home/PROJECTS/pr-vi-hps-tw18/opt/mf
+module load scalasca/2.2.1-intel-impi 
+module li
+
+
+# Application settings
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=4
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+
+# Score-P experiment configuration
+export SCOREP_FILTERING_FILE=../config/scorep.filt
+export SCOREP_METRIC_PAPI=PAPI_TOT_INS,PAPI_TOT_CYC
+#export SCOREP_TOTAL_MEMORY=128M
+
+
+# Scalasca analyzer options
+export SCAN_ANALYZE_OPTS=--time-correct
+
+
+# Intel MPI settings
+export I_MPI_FABRICS=shm:dapl
+export I_MPI_PERHOST=`echo "16/$OMP_NUM_THREADS" | bc`
+export I_MPI_HYDRA_BOOTSTRAP_EXEC=oarsh
+export I_MPI_HYDRA_HOST_FILE=$OAR_NODE_FILE
+
+
+# Launch
+scalasca -analyze -t mpiexec.hydra -genvall -n $NPROCS $EXE

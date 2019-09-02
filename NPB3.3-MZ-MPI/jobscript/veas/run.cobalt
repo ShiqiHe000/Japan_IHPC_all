@@ -1,0 +1,10 @@
+#!/bin/bash
+# run via cobalt
+# remember to specify or set PROJECT if necessary
+
+NODES=1
+PROCS=16
+THRDS=4
+EXE=bt-mz_B.$PROCS
+
+qsub -n $NODES --proccount $PROCS -t 10 --env OMP_NUM_THREADS=$THRDS --mode c$PROCS  $EXE

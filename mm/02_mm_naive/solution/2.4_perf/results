@@ -1,0 +1,27 @@
+Square matrix multiplication AxB with size: 2048 Repetitions: 1
+Memory allocation: 0.00s
+Set matrix values: 0.09s
+# 0 matrix-matrix multiplication: 68.92s
+AVG time: 68.92s MIN time: 68.92s
+Program terminated SUCCESSFULLY
+Free memory: 0.01s
+
+perf stat -d ./mm 2048 > results
+
+ Performance counter stats for './mm 2048':
+
+      69041.179629      task-clock (msec)         #    1.000 CPUs utilized          
+                23      context-switches          #    0.000 K/sec                  
+                 5      cpu-migrations            #    0.000 K/sec                  
+           106,272      page-faults               #    0.002 M/sec                  
+   226,305,548,125      cycles                    #    3.278 GHz                    
+    78,225,446,782      instructions              #    0.35  insn per cycle         
+     8,782,494,021      branches                  #  127.207 M/sec                  
+         5,419,975      branch-misses             #    0.06% of all branches        
+    17,448,183,495      L1-dcache-loads           #  252.721 M/sec                  
+    14,289,968,922      L1-dcache-load-misses     #   81.90% of all L1-dcache hits  
+     8,690,829,024      LLC-loads                 #  125.879 M/sec                  
+       240,523,930      LLC-load-misses           #    2.77% of all LL-cache hits   
+
+      69.040031412 seconds time elapsed
+

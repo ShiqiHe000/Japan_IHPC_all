@@ -1,0 +1,26 @@
+#!/bin/bash --login
+#PBS -N scan_mzmpibt
+#PBS -l mppwidth=16
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A budget
+
+# load the Scalasca module
+module unload PrgEnv-pgi
+module load PrgEnv-gnu
+module load scalasca/1.3.3-gnu
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export MPICH_MAX_THREAD_SAFETY=funneled
+export OMP_NUM_THREADS=4
+CLASS=B
+PROCS=4
+EXE=./bt-mz_$CLASS.$PROCS
+
+# Scalasca experiment configuration
+#export EPK_FILTER=
+
+scalasca -analyze -s  aprun -n $PROCS -d $OMP_NUM_THREADS $EXE
+

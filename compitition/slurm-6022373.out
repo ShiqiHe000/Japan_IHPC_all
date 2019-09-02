@@ -1,0 +1,15 @@
++ ./run.sh FORTRAN hybrid_cpu big result.txt
+[3;J[H[2JQuick help:
+	- This script is meant to be run as follows: './run.sh LANGUAGE IMPLEMENTATION SIZE [OUTPUT_FILE]'
+	- LANGUAGE = 'C' | 'FORTRAN'
+	- IMPLEMENTATION = 'serial' | 'openmp' | 'mpi' | 'hybrid_cpu' | 'openacc' | 'hybrid_gpu'
+	- SIZE = 'small' | 'big'
+	- OUTPUT_FILE = the path to the file in which store the output. If no output file is given, the output is printed in the console.
+	- Example: to run the C serial version on the small grid, run './run.sh C serial small'.
+
+[32m[SUCCESS][0m Correct number of arguments received; language = "FORTRAN", implementation = "hybrid_cpu" and size = "big".
+[32m[SUCCESS][0m The language passed is correct.
+[32m[SUCCESS][0m The implementation passed is correct.
+[32m[SUCCESS][0m The size passed is correct.
+[32m[SUCCESS][0m The executable ./bin/FORTRAN/hybrid_cpu_big exists.
+[32m[SUCCESS][0m Command issued to run your application: "mpirun -n 8 -x OMP_NUM_THREADS=14 -mca btl ^openib ./bin/FORTRAN/hybrid_cpu_big > result.txt"

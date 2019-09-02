@@ -1,0 +1,18 @@
++ export OMP_NUM_THREADS=6
++ OMP_NUM_THREADS=6
++ export OMP_PLACES=cores
++ OMP_PLACES=cores
++ export OMP_PROC_BIND=close
++ OMP_PROC_BIND=close
++ export NPB_MZ_BLOAD=0
++ NPB_MZ_BLOAD=0
++ CLASS=C
++ PROCS=8
++ EXE=./bt-mz_C.8
++ export SCOREP_TIMER=gettimeofday
++ SCOREP_TIMER=gettimeofday
++ export SCOREP_EXPERIMENT_DIRECTORY=scorep_bt-mz_C_8x6_sum_filt
++ SCOREP_EXPERIMENT_DIRECTORY=scorep_bt-mz_C_8x6_sum_filt
++ export SCOREP_FILTERING_FILE=../config/scorep.filt
++ SCOREP_FILTERING_FILE=../config/scorep.filt
++ mpirun -n 8 ./bt-mz_C.8

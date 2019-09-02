@@ -1,0 +1,29 @@
+#!/bin/bash --login
+# submit from ./bin subdirectory with "qsub must.pbs"
+#PBS -N must_mzmpibt
+#PBS -l select=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A y14
+#PBS -q short
+# workshop reserved queue?
+##PBS -q R225396
+
+# load the MUST module
+module unload PrgEnv-cray
+module load PrgEnv-gnu
+
+module use /home/y07/y07/scalasca/modules
+module load must
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+mustrun --must:mpiexec  aprun -n $NPROCS -d $OMP_NUM_THREADS $EXE
+

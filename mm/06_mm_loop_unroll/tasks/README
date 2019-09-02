@@ -1,0 +1,14 @@
+Loop Unrolling 
+
+Instructions:
+* Add compiler flags "-funroll-all-loops" or/and "-funroll-loops" in Makefile
+* Run mm, did you notice performance impact?
+* Follow TODOs in mm.c  
+* Did unrolling improve runtime?
+* Measure execution time for matrices sizes 1024, 2048, 4096 and compare results with previous runs
+* Did perf metrics improve?
+
+Instructions
+* make
+* ./mm <matrix_size>
+* perf stat -d ./mm <matrix_size>

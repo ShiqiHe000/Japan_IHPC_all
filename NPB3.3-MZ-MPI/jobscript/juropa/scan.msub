@@ -1,0 +1,25 @@
+#!/bin/bash
+# submit from bin.scalasca directory with "msub scan.msub"
+#MSUB -N mzmpibt_scan
+#MSUB -l nodes=1:ppn=16
+#MSUB -v tpt=4
+#MSUB -l walltime=00:10:00
+#MSUB -j oe
+
+cd $PBS_O_WORKDIR
+
+module load UNITE scalasca
+
+# benchmark configuration
+export OMP_NUM_THREADS=4
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+# Scalasca configuration
+#export EPK_FILTER=
+
+NEXUS="scalasca -analyze"
+$NEXUS  mpiexec -np $PROCS --exports=OMP_NUM_THREADS $EXE
+
+

@@ -1,0 +1,32 @@
+#!/bin/bash --login
+# submit from ./bin,scorep subdirectory with "qsub scalasca1.pbs"
+#PBS -N scan_mzmpibt
+#PBS -l select=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A y14
+#PBS -q short
+# workshop reserved queue?
+##PBS -q R225396
+
+# load the Scalasca module
+module unload PrgEnv-cray
+module load PrgEnv-gnu
+
+module use /home/y07/y07/scalasca/modules
+module load scalasca/1.4.4-gnu
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+# Scalasca experiment configuration
+#export EPK_FILTER=../config/scan.filt
+
+scalasca -analyze -s  aprun -n $NPROCS -d $OMP_NUM_THREADS $EXE
+

@@ -1,0 +1,8 @@
+#!/bin/bash
+# run vithin BG/Q allocation
+
+PROCS=16
+THRDS=4
+EXE=bt-mz_B.$PROCS
+
+runjob --np $PROCS --ranks-per-node $PROCS --envs OMP_NUM_THREADS=$THRDS : $EXE

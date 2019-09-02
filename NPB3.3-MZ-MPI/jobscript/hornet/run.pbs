@@ -1,0 +1,26 @@
+#!/bin/bash --login
+# submit from ./bin subdirectory with "qsub run.pbs"
+#PBS -N run_mzmpibt
+#PBS -l nodes=2:ppn=24
+#PBS -l walltime=00:10:00
+#PBS -j oe
+##PBS -A account
+# workshop reserved queues
+##PBS -q R225396
+
+cd $PBS_O_WORKDIR
+
+# load required modules
+#module unload PrgEnv-cray
+#module load PrgEnv-intel
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+set -x
+
+aprun -n $NPROCS -d $OMP_NUM_THREADS  $EXE

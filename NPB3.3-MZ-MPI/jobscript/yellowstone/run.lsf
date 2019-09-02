@@ -1,0 +1,22 @@
+#!/bin/bash
+#
+#BSUB -a poe                  # set parallel operating environment
+#BSUB -P SCSG0004             # project code
+#BSUB -J bt-mz                # job name
+#BSUB -W 00:15                # wall-clock time (hrs:mins)
+#BSUB -n 8                    # number of tasks in job
+#BSUB -R "span[ptile=2]"      # run two MPI tasks per node
+#BSUB -q tutorial             # queue
+#BSUB -e %J.err               # output file name in which %J is replaced by the job ID
+#BSUB -o %J.out               # error file name in which %J is replaced by the job ID
+
+export OMP_NUM_THREADS=8
+
+# Thread pinning
+export MP_TASK_AFFINITY=core:$OMP_NUM_THREADS
+
+# Application load balancing
+export NPB_MZ_BLOAD=0
+
+mpirun.lsf ./bt-mz_C.8
+

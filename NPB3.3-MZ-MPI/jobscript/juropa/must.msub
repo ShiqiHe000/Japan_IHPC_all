@@ -1,0 +1,21 @@
+#!/bin/bash
+# submit this job from ./bin directory with "msub must.lsf"
+#MSUB -N mzmpibt_must
+#MSUB -l nodes=2:ppn=16
+#MSUB -v tpt=4
+#MSUB -l walltime=00:10:00
+#MSUB -j oe
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export OMP_NUM_THREADS=4
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+module load UNITE must
+
+NEXUS="mustrun --must:mpiexec"
+$NEXUS  mpiexec -np $PROCS --envall $EXE
+

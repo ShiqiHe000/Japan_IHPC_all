@@ -1,0 +1,16 @@
+OpenMP
+
+Instructions:
+* Request allocation in interactive session
+  interact -R performance -p RM -N 1 -t 0:30:00
+* Follow TODOs in mm.c
+* Apply OpenMP pragma
+* Perform strong scaling from single to 32 threads (matrix size 4096),
+  compute actual and ideal speedup and plot it 
+* Perform weak scaling from single to 32 threads 
+  (use following sizes for scaling: 2048, 2580, 3248, 4096, 5192, 6496),
+   compute actual and ideal efficiency and plot it
+
+Instructions
+* make
+* ./mm <matrix_size>

@@ -1,0 +1,24 @@
+#!/bin/bash
+# submit from ./bin.scorep directory with "msub scorep.msub"
+#MSUB -N mzmpibt_scorep
+#MSUB -l nodes=1:ppn=16
+#MSUB -v tpt=4
+#MSUB -l walltime=00:10:00
+#MSUB -j oe
+
+# benchmark configuration
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+export OMP_NUM_THREADS=4
+export NPB_MZ_BLOAD=0 # disable load balancing with dynamic threads
+
+module load UNITE scorep
+
+# Score-P measurement configuration
+#export SCOREP_FILTERING_FILE=../config/scorep.filt
+
+set -x
+mpiexec -np $PROCS --exports=NPB_MZ_BLOAD,OMP_NUM_THREADS  $EXE
+

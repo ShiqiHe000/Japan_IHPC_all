@@ -1,0 +1,34 @@
+#!/bin/bash --login
+# submit from ./bin.scorep subdirectory with "qsub scalasca2.pbs"
+#PBS -N scan_mzmpibt
+#PBS -l nodes=2:ppn=24
+#PBS -l walltime=00:10:00
+#PBS -j oe
+##PBS -A account
+# workshop reserved queues
+##PBS -q R225396
+
+# load required modules
+#module unload PrgEnv-cray
+#module load PrgEnv-intel
+
+#module load scalasca/2.2
+export SCALASCA_DIR=/zhome/academic/HLRS/xhp/xhpiz/install/new_release/PrgEnv-gnu/scalasca-2.2
+export SCALASCA_RTS=$SCALASCA_DIR/bin/backend
+export PATH=$SCALASCA_DIR/bin:$PATH
+export SCAN_ANALYZE_OPTS=--time-correct
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+# Score-P experiment configuration
+#export SCOREP_FILTERING_FILE=../config/scorep.filt
+#export SCOREP_TOTAL_MEMORY=78M
+
+scalasca -analyze -s  aprun -n $NPROCS -d $OMP_NUM_THREADS  $EXE

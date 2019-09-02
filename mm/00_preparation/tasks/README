@@ -1,0 +1,11 @@
+Preparation
+
+* Login to Bridges
+  ssh -X -p 2222 <user>@bridges.psc.edu
+* Investigate which CPU do you use on your laptop and Bridges?
+  Possible tools/utils 
+  - cat /proc/cpuinfo
+  - getconf -a
+  - lstopo-no-graphics/lstopo*
+  - hwloc-ls
+  - /home/zhukov/ihpcss18/tools/likwid/gcc_openmpi/bin/likwid-topology

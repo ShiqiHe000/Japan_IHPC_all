@@ -1,0 +1,24 @@
+#!/bin/bash
+# submit from bin.vampir directory with "msub vt.msub"
+#MSUB -N mzmpibt_vt
+#MSUB -l nodes=1:ppn=16
+#MSUB -v tpt=4
+#MSUB -l walltime=00:10:00
+#MSUB -j oe
+
+cd $PBS_O_WORKDIR
+
+module load UNITE vampir
+
+# benchmark configuration
+export OMP_NUM_THREADS=4
+PROCS=4
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+# VampirTrace configuration
+#export VT_FILE_PREFIX=
+
+mpiexec -np $PROCS --envall $EXE
+
+

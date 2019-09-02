@@ -1,0 +1,27 @@
+#!/bin/bash
+# submit from ./bin.scalasca directory with "ccc_msub scan.msub"
+#MSUB -r npb_btmz_scan
+#MSUB -o npb_btmz_%I.oe
+#MSUB -e npb_btmz_%I.oe
+#MSUB -n 4	# number of MPI processes
+#MSUB -c 8	# number of OpenMP threads/process
+#MSUB -T 600	# max walltime in seconds
+#MSUB -x	# allocate exclusive nodes
+#MSUB -A tgcc0007 # project id
+
+cd $BRIDGE_MSUB_PWD
+
+# benchmark configuration
+export OMP_NUM_THREADS=$BRIDGE_MSUB_NCORE
+PROCS=$BRIDGE_MSUB_NPROC
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+# Scalasca experiment configuration
+NEXUS="scalasca -analyze -s"
+export SCAN_MPI_LAUNCHER=ccc_mprun
+export SCAN_ANALYZE_OPTS=-isv
+#export EPK_FILTER=
+
+$NEXUS ccc_mprun -n $PROCS  $EXE
+

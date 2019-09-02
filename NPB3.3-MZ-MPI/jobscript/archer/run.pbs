@@ -1,0 +1,23 @@
+#!/bin/bash --login
+# submit from ./bin subdirectory with "qsub run.pbs"
+#PBS -N mzmpibt
+#PBS -l select=2
+#PBS -l walltime=00:10:00
+#PBS -j oe
+#PBS -A y14
+#PBS -q short
+# workshop reserved queue?
+##PBS -q R225396
+
+cd $PBS_O_WORKDIR
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=6
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+set -x
+
+aprun -n $NPROCS -d $OMP_NUM_THREADS $EXE

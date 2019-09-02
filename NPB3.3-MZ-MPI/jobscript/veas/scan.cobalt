@@ -1,0 +1,15 @@
+#!/bin/bash
+# run via cobalt
+# remember to specify or set PROJECT if necessary
+
+NODES=1
+PROCS=16
+THRDS=4
+EXE=bt-mz_B.$PROCS
+
+NEXUS="scalasca -analyze -f ../config/scan.filt"
+# "-m PAPI_FP_OPS" adds PAPI counter(s)
+# NB: use ./EPIK.CONF for additional EPIK configuration
+# such as ELG_SION_FILES=16
+
+$NEXUS  qsub -n $NODES --proccount $PROCS -t 10 --env OMP_NUM_THREADS=$THRDS --mode c$PROCS  $EXE

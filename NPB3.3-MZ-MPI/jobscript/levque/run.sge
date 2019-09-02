@@ -1,0 +1,25 @@
+#!/bin/bash
+# submit from ./bin directory with "qsub run.sge"
+#$ -N mzmpibt
+#$ -cwd
+#$ -o $JOB_NAME.$JOB_ID
+#$ -e $JOB_NAME.$JOB_ID
+#$ -S /bin/bash
+#$ -pe openmpi 16
+#$ -v OMP_NUM_THREADS=4
+#$ -q all.q
+
+export LD_LIBRARY_PATH=/opt/intel/Compiler/11.1/072/lib/intel64:/opt/intel/Compiler/11.1/072/ipp/em64t/sharedlib:/opt/intel/Compiler/11.1/072/mkl/lib/em64t:/opt/intel/Compiler/11.1/072/lib/intel64:/opt/intel/Compiler/11.1/072/ipp/em64t/sharedlib:/opt/intel/Compiler/11.1/072/mkl/lib/em64t
+
+source /etc/profile.d/modules.sh
+module load openmpi_intel
+
+export OMPI_MCA_mpi_paffinity_alone=1
+export OMPI_MCA_btl_openib_warn_default_gid_prefix=0
+
+# benchmark configuration
+PROCS=`expr $NSLOTS / $OMP_NUM_THREADS`
+CLASS=B
+EXE=./bt-mz_$CLASS.$PROCS
+
+mpiexec -np $PROCS  $EXE

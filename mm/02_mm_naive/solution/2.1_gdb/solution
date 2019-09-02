@@ -1,0 +1,19 @@
+Play with GDB
+
+* Verify that code deliver wrong results
+  ./mm 4
+* Use GDB
+  gdb --args ./mm 4
+* Create breakpoint
+  break compute
+* Print values of matrixes a, b, c
+  print **matrix_a@16
+  print **matrix_b@16
+  print **matrix_c@16
+* Matrix b is not an identity matrix
+* Identify address of wrong value
+  print &(*(*matrix_b + 10)@1)
+  <addr>
+* Modify address
+  set *<addr>=1.0
+  continue

@@ -1,0 +1,15 @@
+SINDise
+
+Instructions:
+* Add compiler flags "-fopt-info-vec=vec.report" in Makefile
+* investigate vec.report. Was our application vectorized?
+* Follow TODOs in mm.c
+* compile again and investigate vec.report. Was it vectorized?
+* Measure execution time for matrices sizes 1024, 2048, 4096 and compare results with previous runs
+* Did perf metrics improve?
+
+Instructions
+* make
+* ./mm <matrix_size>
+* perf stat -d ./mm <matrix_size>
+

@@ -1,0 +1,9 @@
+Reorder loop indexes
+
+Task
+* follow TODOs in mm.c
+* Measure computing time of matrices with growing sizes, i.e. 1024, 2048 and note it. Compare results with naive and GSL versions
+
+Instructions
+* make
+* ./mm <matrix_size>

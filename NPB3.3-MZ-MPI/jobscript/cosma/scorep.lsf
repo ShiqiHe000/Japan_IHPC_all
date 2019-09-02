@@ -1,0 +1,32 @@
+#!/bin/bash
+# submit from ./bin.scorep directory with "bsub < scorep.lsf"
+#
+#BSUB -P durham               # project code
+#BSUB -J bt-mz                # job name
+#BSUB -W 00:10                # wall-clock time (hrs:mins)
+#BSUB -n 8                    # number of tasks in job
+#BSUB -R "span[ptile=4]"      # run four MPI tasks per node
+#BSUB -q cosma                # queue
+##BSUB -e scorep-%J.err        # output file name in which %J is replaced by the job ID
+#BSUB -o scorep-%J.out        # error file name in which %J is replaced by the job ID
+#BSUB -x                      # exclusive use of nodes
+
+# benchmark configuration
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=3
+PROCS=8
+CLASS=C
+EXE=./bt-mz_$CLASS.$PROCS
+
+# Score-P measurement configuration
+#export SCOREP_EXPERIMENT_DIRECTORY=scorep_sum
+#export SCOREP_FILTERING_FILE=../config/scorep.filt
+#export SCOREP_METRIC_PAPI=PAPI_TOT_INS,PAPI_FP_INS
+#export SCOREP_METRIC_PAPI_PER_PROCESS=PAPI_L2_TCM
+#export SCOREP_METRIC_RUSAGE=ru_stime
+#export SCOREP_METRIC_RUSAGE_PER_PROCESS=ru_maxrss
+#export SCOREP_TOTAL_MEMORY=50M
+
+mpirun -np $PROCS  $EXE
+
+

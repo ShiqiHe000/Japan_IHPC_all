@@ -1,0 +1,41 @@
+#!/bin/bash
+#OAR -l /nodes=2/core=16,walltime=0:15:00
+#OAR -t devel
+#OAR --project vi-hps-tw18
+#OAR --stdout tau_%jobid%
+#OAR --stderr tua_%jobid%
+
+
+# Environnement
+. /applis/site/env.bash
+module load intel-devel
+
+# Load the TAU module
+module use /home/PROJECTS/pr-vi-hps-tw18/opt/mf
+module load tau
+
+# Application settings
+export NPB_MZ_BLOAD=0
+export OMP_NUM_THREADS=4
+CLASS=C
+NPROCS=8
+EXE=./bt-mz_$CLASS.$NPROCS
+
+# Intel MPI settings
+export I_MPI_FABRICS=shm:dapl
+export I_MPI_PERHOST=`echo "16/$OMP_NUM_THREADS" | bc`
+export I_MPI_HYDRA_BOOTSTRAP_EXEC=oarsh
+export I_MPI_HYDRA_HOST_FILE=$OAR_NODE_FILE
+
+# Launch
+#mpiexec.hydra -genvall -n $NPROCS $EXE
+
+# Use tau_exec to launch the binary
+mpiexec.hydra -genvall -n $NPROCS tau_exec -T mpi,ompt,pdt,papi,icpc -ompt $EXE
+
+# Then launch it with -ebs enabled to get profiles that contain event based samples
+# Please uncomment the lines below to get callpaths that contain the samples and show
+# the calleer-callee relationships. 
+#export TAU_CALLPATH=1
+#export TAU_CALLPATH_DEPTH=10
+#mpiexec.hydra -genvall -n $NPROCS tau_exec -T mpi,ompt,pdt,papi,icpc -ompt -ebs $EXE

@@ -1,0 +1,19 @@
+Do not re-invent the wheel!
+
+== 1.1 ==
+- Load GNU Scientific Library
+  module load GSL
+- Use GNU Scientific Library for matrix-matrix multiplication.
+  See: https://www.gnu.org/software/gsl/doc/html/blas.html
+  Example: https://www.gnu.org/software/gsl/manual/html_node/BLAS-Examples.html
+- To compile: make
+- To run: ./mm <matrix_size>
+- Measure actual computation time with "gettimeofday"
+  See: http://man7.org/linux/man-pages/man2/gettimeofday.2.html            
+  Example: https://www.geeksforgeeks.org/measure-execution-time-with-high-precision-in-c-c/
+- Read and follow TODOs in mm.c
+
+== 1.2 ==
+- Measure total execution time with "time" util for matrices sizes 1024, 2048, 4096. 
+  Please note results.
+  See: https://linux.die.net/man/1/time

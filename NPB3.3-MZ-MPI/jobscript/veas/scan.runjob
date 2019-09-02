@@ -1,0 +1,13 @@
+#!/bin/bash
+# run within BG/Q allocation
+
+PROCS=16
+THRDS=4
+EXE=bt-mz_B.$PROCS
+
+NEXUS="scalasca -analyze"
+export EPK_FILTER=../config/scan.filt
+#export EPK_METRICS=PAPI_FP_OPS
+#export ELG_SION_FILES=$PROCS
+
+$NEXUS  runjob -np $PROCS --ranks-per-node $PROCS --envs OMP_NUM_THREADS=$THRDS :  $EXE

@@ -1,0 +1,22 @@
+* valgrind --leak-check=yes ./mm 128 
+==15288== 
+==15288== HEAP SUMMARY:
+==15288==     in use at exit: 131,072 bytes in 1 blocks
+==15288==   total heap usage: 3 allocs, 2 frees, 393,216 bytes allocated
+==15288== 
+==15288== 131,072 bytes in 1 blocks are definitely lost in loss record 1 of 1
+==15288==    at 0x4C29BE3: malloc (vg_replace_malloc.c:299)
+==15288==    by 0x400995: allocate (in /home/zhukov/ihpcss19/tutorial/ihpcss/2019/mm/02_mm_naive/solution/2.2_valgrind/mm)
+==15288==    by 0x400756: main (in /home/zhukov/ihpcss19/tutorial/ihpcss/2019/mm/02_mm_naive/solution/2.2_valgrind/mm)
+==15288== 
+==15288== LEAK SUMMARY:
+==15288==    definitely lost: 131,072 bytes in 1 blocks
+==15288==    indirectly lost: 0 bytes in 0 blocks
+==15288==      possibly lost: 0 bytes in 0 blocks
+==15288==    still reachable: 0 bytes in 0 blocks
+==15288==         suppressed: 0 bytes in 0 blocks
+==15288== 
+==15288== For counts of detected and suppressed errors, rerun with: -v
+==15288== ERROR SUMMARY: 1 errors from 1 contexts (suppressed: 0 from 0)
+
+* free matrix_c and repeat valgrind analysis
